@@ -10,6 +10,8 @@ class Tree extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     public function people(): HasMany
     {
         return $this->hasMany(Person::class);

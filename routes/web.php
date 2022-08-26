@@ -16,12 +16,22 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect('/family-trees');
+    return redirect()->route('family-trees');
 });
 
 Route::prefix('family-trees')->group(function () {
-    Route::get('/', [FamilyTreeController::class, 'getAll'])->name('family-trees');
-    Route::get('/{tree}', [FamilyTreeController::class, 'getOne'])->name('family-tree');
+    Route::get('/', [FamilyTreeController::class, 'getAll'])
+        ->name('family-trees');
+
+    Route::get('/{tree}', [FamilyTreeController::class, 'getOne'])
+        ->where('tree', '[0-9]+')
+        ->name('family-tree');
+
+    Route::get('/add', [FamilyTreeController::class, 'getAdd'])
+        ->name('add-family-tree');
+
+    Route::post('/add', [FamilyTreeController::class, 'postAdd'])
+        ->name('create-family-tree');
 });
 
 Route::prefix('people')->group(function () {
