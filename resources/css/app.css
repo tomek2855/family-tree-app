@@ -8,3 +8,7 @@ a {
     text-blue-500;
 
 }
+
+.descendants-list li {
+    margin-left: 1rem;
+}

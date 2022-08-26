@@ -20,6 +20,8 @@ class Person extends Model
 
     protected $casts = [
         'gender' => PersonGender::class,
+        'birth_date' => 'date',
+        'death_date' => 'date',
     ];
 
     public function tree(): HasOne

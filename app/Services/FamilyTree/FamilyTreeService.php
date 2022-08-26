@@ -29,7 +29,7 @@ class FamilyTreeService implements YoungestDescendant
         return $target;
     }
 
-    public function storeNewFamilyTreeWithPerson(CreateFamilyTreeRequest $request): Tree
+    public function storeNewFamilyTreeWithPerson(CreateFamilyTreeRequest $request): ?Tree
     {
         $tree = DB::transaction(function () use ($request) {
             $tree = new Tree([
