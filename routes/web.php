@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\AddPersonToRelationshipType;
 use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\FamilyTreeController;
 use Illuminate\Support\Facades\Route;
@@ -35,5 +36,17 @@ Route::prefix('family-trees')->group(function () {
 });
 
 Route::prefix('people')->group(function () {
-    Route::get('/{person}', [PeopleController::class, 'getOne'])->name('person');
+    Route::get('/{person}', [PeopleController::class, 'getOne'])
+        ->where('person', '[0-9]+')
+        ->name('person');
+
+    Route::get('/add/{person}/{type}', [PeopleController::class, 'getAdd'])
+        ->where('person', '[0-9]+')
+        ->whereIn('type', collect(AddPersonToRelationshipType::cases())->map(fn (AddPersonToRelationshipType $type) => $type->name)->all())
+        ->name('add-person');
+
+    Route::post('/add/{person}/{type}', [PeopleController::class, 'postAdd'])
+        ->where('person', '[0-9]+')
+        ->whereIn('type', collect(AddPersonToRelationshipType::cases())->map(fn (AddPersonToRelationshipType $type) => $type->name)->all())
+        ->name('create-person');
 });

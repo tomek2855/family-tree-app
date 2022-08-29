@@ -39,7 +39,7 @@ class YoungestDescendantTaggedCacheService implements YoungestDescendantCache
 
     public function flushAll(): void
     {
-        $this->cache->tags(self::CACHE_TAG)->flush();
+        $this->cache->tags(self::CACHE_TAG)->clear();
     }
 
     private function getCacheKey(Person $person): string

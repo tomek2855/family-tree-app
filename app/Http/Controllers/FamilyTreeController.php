@@ -11,6 +11,7 @@ use App\Http\Requests\FamilyTree\CreateFamilyTreeRequest;
 use App\Models\Tree;
 use App\Services\FamilyTree\FamilyTreeService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class FamilyTreeController extends Controller
@@ -82,7 +83,7 @@ class FamilyTreeController extends Controller
         ));
     }
 
-    public function postAdd(CreateFamilyTreeRequest $request, FamilyTreeService $service)
+    public function postAdd(CreateFamilyTreeRequest $request, FamilyTreeService $service): RedirectResponse
     {
         $tree = $service->storeNewFamilyTreeWithPerson($request);
 

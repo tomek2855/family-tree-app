@@ -38,7 +38,7 @@ class YoungestDescendantCacheService implements YoungestDescendantCache
 
     public function flushAll(): void
     {
-        $this->cache->flush();
+        $this->cache->clear();
     }
 
     private function getCacheKey(Person $person): string
