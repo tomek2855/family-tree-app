@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\FamilyTree\YoungestDescendant;
-use App\Enums\AddPersonToRelationshipType;
+use App\Enums\PersonRelationshipType;
 use App\Enums\PersonGender;
 use App\Extensions\Forms\DateInput;
 use App\Extensions\Forms\Form;
@@ -32,7 +32,7 @@ class PeopleController extends Controller
 
     public function getAdd(Person $person, string $type, Request $request): View
     {
-        $type = AddPersonToRelationshipType::from($type);
+        $type = PersonRelationshipType::from($type);
 
         $form = new Form(route('create-person', compact('person', 'type')));
 
@@ -80,12 +80,12 @@ class PeopleController extends Controller
 
     public function postAdd(Person $person, string $type, AddPersonToRelationship $request, FamilyTreeService $service): RedirectResponse
     {
-        $type = AddPersonToRelationshipType::from($type);
+        $type = PersonRelationshipType::from($type);
 
         $newPerson = match ($type) {
-            AddPersonToRelationshipType::partner => $service->storePersonPartner($person, $request),
-            AddPersonToRelationshipType::child => $service->storePersonChild($person, $request),
-            AddPersonToRelationshipType::parent => $service->storePersonParent($person, $request),
+            PersonRelationshipType::partner => $service->storePersonPartner($person, $request),
+            PersonRelationshipType::child => $service->storePersonChild($person, $request),
+            PersonRelationshipType::parent => $service->storePersonParent($person, $request),
         };
 
         return redirect()->route('person', [

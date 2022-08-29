@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum AddPersonToRelationshipType: string
+enum PersonRelationshipType: string
 {
     case partner = 'partner';
     case child = 'child';

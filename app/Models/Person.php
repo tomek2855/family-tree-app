@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\PersonGender;
+use App\Enums\PersonRelationshipType;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -35,7 +36,7 @@ class Person extends Model
             secondKey: 'id',
             secondLocalKey: 'relation_id',
         )
-            ->where('person_type', 'partner');
+            ->where('person_type', PersonRelationshipType::partner->name);
     }
 
     public function parentsRelationship(): HasOneThrough
@@ -46,7 +47,7 @@ class Person extends Model
             'id',
             'relation_id',
         )
-            ->where('person_type', 'child');
+            ->where('person_type', PersonRelationshipType::child->name);
     }
 
     /**

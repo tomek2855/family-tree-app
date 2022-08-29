@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\PersonRelationshipType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
@@ -16,7 +17,7 @@ class Relationship extends Model
             firstKey: 'relation_id',
             secondKey: 'id',
             secondLocalKey: 'person_id',
-        )->where('person_type', 'partner');
+        )->where('person_type', PersonRelationshipType::partner->name);
     }
 
     public function children(): HasManyThrough
@@ -25,6 +26,6 @@ class Relationship extends Model
             firstKey: 'relation_id',
             secondKey: 'id',
             secondLocalKey: 'person_id',
-        )->where('person_type', 'child');
+        )->where('person_type', PersonRelationshipType::child->name);
     }
 }

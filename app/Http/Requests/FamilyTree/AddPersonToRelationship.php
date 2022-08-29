@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\FamilyTree;
 
-use App\Enums\AddPersonToRelationshipType;
+use App\Enums\PersonRelationshipType;
 use App\Enums\PersonGender;
 use App\Rules\FamilyTree\CheckChildIsYounger;
 use App\Rules\FamilyTree\CheckParentGender;
@@ -52,14 +52,14 @@ class AddPersonToRelationship extends FormRequest
         ];
 
         switch ($type) {
-            case AddPersonToRelationshipType::partner:
+            case PersonRelationshipType::partner:
                 $rules['first_name'][] = new CheckPartnerNotExists($person);
                 $rules['gender'][] = new CheckPartnerGender($person);
                 break;
-            case AddPersonToRelationshipType::child:
+            case PersonRelationshipType::child:
                 $rules['birth_date'][] = new CheckChildIsYounger($person);
                 break;
-            case AddPersonToRelationshipType::parent:
+            case PersonRelationshipType::parent:
                 $rules['first_name'][] = new CheckParentsCount($person);
                 $rules['gender'][] = new CheckParentGender($person);
                 $rules['birth_date'][] = new CheckParentIsOlder($person);
@@ -73,7 +73,7 @@ class AddPersonToRelationship extends FormRequest
     {
         $typeString = $this->route('type');
 
-        $type = AddPersonToRelationshipType::from($typeString);
+        $type = PersonRelationshipType::from($typeString);
 
         $person = $this->route('person');
 

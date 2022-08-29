@@ -38,17 +38,20 @@
 
     <div class="py-4 flex flex-row gap-4">
         @if (!$person->getPartner())
-            <a href="{{ route('add-person', ['person' => $person, 'type' => \App\Enums\AddPersonToRelationshipType::partner->name]) }}" class="bg-green-500 text-white rounded py-2 px-4">
+            <a href="{{ route('add-person', ['person' => $person, 'type' => \App\Enums\PersonRelationshipType::partner->name]) }}"
+               class="bg-green-500 text-white rounded py-2 px-4">
                 Add partner
             </a>
         @endif
 
-        <a href="{{ route('add-person', ['person' => $person, 'type' => \App\Enums\AddPersonToRelationshipType::child->name]) }}" class="bg-yellow-500 text-white rounded py-2 px-4">
+        <a href="{{ route('add-person', ['person' => $person, 'type' => \App\Enums\PersonRelationshipType::child->name]) }}"
+           class="bg-yellow-500 text-white rounded py-2 px-4">
             Add child
         </a>
 
         @if (!$person->getParents() || count($person->getParents()) < 2)
-            <a href="{{ route('add-person', ['person' => $person, 'type' => \App\Enums\AddPersonToRelationshipType::parent->name]) }}" class="bg-orange-500 text-white rounded py-2 px-4">
+            <a href="{{ route('add-person', ['person' => $person, 'type' => \App\Enums\PersonRelationshipType::parent->name]) }}"
+               class="bg-orange-500 text-white rounded py-2 px-4">
                 Add parent
             </a>
         @endif

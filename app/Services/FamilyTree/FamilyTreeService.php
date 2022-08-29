@@ -4,6 +4,7 @@ namespace App\Services\FamilyTree;
 
 use App\Contracts\FamilyTree\YoungestDescendantCache;
 use App\Contracts\FamilyTree\YoungestDescendant;
+use App\Enums\PersonRelationshipType;
 use App\Http\Requests\FamilyTree\AddPersonToRelationship;
 use App\Http\Requests\FamilyTree\CreateFamilyTreeRequest;
 use App\Models\PeopleRelationship;
@@ -55,7 +56,7 @@ class FamilyTreeService implements YoungestDescendant
 
             $relationship = $person->partnerRelationship()->firstOrCreate();
 
-            $this->createPeopleRelationship($person, $relationship, 'partner');
+            $this->createPeopleRelationship($person, $relationship, PersonRelationshipType::partner->name);
 
             return $tree;
         });
@@ -70,7 +71,7 @@ class FamilyTreeService implements YoungestDescendant
 
             $relationship = $person->partnerRelationship;
 
-            $this->createPeopleRelationship($newPerson, $relationship, 'partner');
+            $this->createPeopleRelationship($newPerson, $relationship, PersonRelationshipType::partner->name);
 
             return $newPerson;
         });
@@ -85,11 +86,11 @@ class FamilyTreeService implements YoungestDescendant
 
             $relationship = $person->partnerRelationship;
 
-            $this->createPeopleRelationship($newPerson, $relationship, 'child');
+            $this->createPeopleRelationship($newPerson, $relationship, PersonRelationshipType::child->name);
 
             $partnerRelationship = Relationship::create();
 
-            $this->createPeopleRelationship($newPerson, $partnerRelationship, 'partner');
+            $this->createPeopleRelationship($newPerson, $partnerRelationship, PersonRelationshipType::partner->name);
 
             return $newPerson;
         });
@@ -109,10 +110,10 @@ class FamilyTreeService implements YoungestDescendant
             if (!$relationship) {
                 $relationship = Relationship::create();
 
-                $this->createPeopleRelationship($newPerson, $relationship, 'partner');
-                $this->createPeopleRelationship($person, $relationship, 'child');
+                $this->createPeopleRelationship($newPerson, $relationship, PersonRelationshipType::partner->name);
+                $this->createPeopleRelationship($person, $relationship, PersonRelationshipType::child->name);
             } else {
-                $this->createPeopleRelationship($newPerson, $relationship, 'partner');
+                $this->createPeopleRelationship($newPerson, $relationship, PersonRelationshipType::partner->name);
             }
 
             return $newPerson;
